@@ -89,8 +89,30 @@ class Message {
   - Receiver
   - Content
   - Timestamp
+  - MessageType
   + sendMessage()
   + viewMessage()
+}
+
+class Notification {
+  - NotificationID
+  - Sender
+  - Receiver
+  - Content
+  - Timestamp
+  + sendNotification()
+  + viewNotification()
+}
+
+class MatchNotification {
+  - MatchID
+  + sendMatchNotification()
+  + viewMatchNotification()
+}
+
+class MessageNotification {
+  + sendMessageNotification()
+  + viewMessageNotification()
 }
 
 class Block {
@@ -111,15 +133,6 @@ class Report {
   + viewReport()
 }
 
-class Notification {
-  - NotificationID
-  - User
-  - Content
-  - Timestamp
-  + sendNotification()
-  + viewNotification()
-}
-
 class Location {
   - LocationID
   - Name
@@ -131,28 +144,6 @@ class Location {
   + viewLocation()
 }
 
-class ChatMessage {
-  - MessageID
-  - Sender
-  - Receiver
-  - Content
-  - Timestamp
-  + sendMessage()
-  + viewMessage()
-}
-
-class ChatNotification {
-  - NotificationID
-  - Sender
-  - Receiver
-  - Content
-  - Timestamp
-  + sendChatNotification()
-  + viewChatNotification()
-}
-
-User "1" -- "0..*" ChatMessage : Sends/Receives
-User "1" -- "0..*" ChatNotification : Receives
 User "1" -- "1" Profile : Has
 User "1" -- "0..*" Photo : Has
 User "1" -- "0..*" Like : Likes
@@ -167,4 +158,10 @@ Moderator -- Suspension : Creates
 Suspension -- User : SuspendedUser
 User <|-- NormalUser
 User <|-- Moderator
+
+MatchNotification --|> Notification
+Match "1" -- "0..*" MatchNotification : Generates
+
+MessageNotification --|> Notification
+Message "1" -- "0..*" MessageNotification : Generates
 @enduml
