@@ -1,0 +1,167 @@
+@startuml
+left to right direction
+
+abstract class User {
+  - UserID
+  - Username
+  - Password
+  - Email
+  - DateOfBirth
+  - Gender
+  - Location
+  - ProfilePicture
+  - Description
+  + createUser()
+  + editProfile()
+  + uploadPhoto()
+  + likeProfile()
+  + sendMessage()
+  + blockUser()
+  + reportUser()
+  + receiveNotification()
+  + getMatches()
+}
+
+class Moderator {
+  - ModeratorID
+  - Permissions
+  + suspendUser()
+  + banUser()
+  + reviewReports()
+}
+
+class NormalUser {
+  - NormalUserID
+  - SubscriptionType
+  + upgradeSubscription()
+}
+
+class Suspension {
+  - SuspensionID
+  - SuspendedUser
+  - SuspendedBy
+  - Reason
+  - StartDate
+  - EndDate
+}
+
+class Profile {
+  - ProfileID
+  - User
+  - Biography
+  - Interests
+  - RelationshipStatus
+  + viewProfile()
+  + editBiography()
+  + updateInterests()
+  + changeRelationshipStatus()
+}
+
+class Photo {
+  - PhotoID
+  - Image
+  - Caption
+  - User
+  + uploadPhoto()
+  + addCaption()
+  + viewPhoto()
+}
+
+class Like {
+  - LikeID
+  - User
+  - LikedProfile
+  + likeProfile()
+}
+
+class Match {
+  - MatchID
+  - User1
+  - User2
+  - MatchedDate
+  + createMatch()
+  + viewMatch()
+}
+
+class Message {
+  - MessageID
+  - Sender
+  - Receiver
+  - Content
+  - Timestamp
+  - MessageType
+  + sendMessage()
+  + viewMessage()
+}
+
+class Notification {
+  - NotificationID
+  - Sender
+  - Receiver
+  - Content
+  - Timestamp
+  + sendNotification()
+  + viewNotification()
+}
+
+class MatchNotification {
+  - MatchID
+  + sendMatchNotification()
+  + viewMatchNotification()
+}
+
+class MessageNotification {
+  + sendMessageNotification()
+  + viewMessageNotification()
+}
+
+class Block {
+  - BlockID
+  - BlockingUser
+  - BlockedUser
+  + blockUser()
+  + unblockUser()
+}
+
+class Report {
+  - ReportID
+  - ReportingUser
+  - ReportedUser
+  - Reason
+  - Timestamp
+  + reportUser()
+  + viewReport()
+}
+
+class Location {
+  - LocationID
+  - Name
+  - Latitude
+  - Longitude
+  + getLocation()
+  + setName()
+  + setCoordinates()
+  + viewLocation()
+}
+
+User "1" -- "1" Profile : Has
+User "1" -- "0..*" Photo : Has
+User "1" -- "0..*" Like : Likes
+User "1" -- "0..*" Match : Matches
+User "1" -- "0..*" Message : Sends/Receives
+User "1" -- "0..*" Block : Blocks/Is Blocked
+User "1" -- "0..*" Report : Reports
+User "1" -- "0..*" Notification : Receives
+Profile "1" -- "1" Location : Located In
+
+Moderator -- Suspension : Creates
+Suspension -- User : SuspendedUser
+User <|-- NormalUser
+User <|-- Moderator
+
+MatchNotification --|> Notification
+Match "1" -- "0..*" MatchNotification : Generates
+
+MessageNotification --|> Notification
+Message "1" -- "0..*" MessageNotification : Generates
+@enduml
