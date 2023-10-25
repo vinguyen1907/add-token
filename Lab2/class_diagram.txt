@@ -1,8 +1,7 @@
-@startuml DatingSocialMedia
-
+@startuml
 left to right direction
 
-class User {
+abstract class User {
   - UserID
   - Username
   - Password
@@ -21,6 +20,29 @@ class User {
   + reportUser()
   + receiveNotification()
   + getMatches()
+}
+
+class Moderator {
+  - ModeratorID
+  - Permissions
+  + suspendUser()
+  + banUser()
+  + reviewReports()
+}
+
+class NormalUser {
+  - NormalUserID
+  - SubscriptionType
+  + upgradeSubscription()
+}
+
+class Suspension {
+  - SuspensionID
+  - SuspendedUser
+  - SuspendedBy
+  - Reason
+  - StartDate
+  - EndDate
 }
 
 class Profile {
@@ -109,6 +131,28 @@ class Location {
   + viewLocation()
 }
 
+class ChatMessage {
+  - MessageID
+  - Sender
+  - Receiver
+  - Content
+  - Timestamp
+  + sendMessage()
+  + viewMessage()
+}
+
+class ChatNotification {
+  - NotificationID
+  - Sender
+  - Receiver
+  - Content
+  - Timestamp
+  + sendChatNotification()
+  + viewChatNotification()
+}
+
+User "1" -- "0..*" ChatMessage : Sends/Receives
+User "1" -- "0..*" ChatNotification : Receives
 User "1" -- "1" Profile : Has
 User "1" -- "0..*" Photo : Has
 User "1" -- "0..*" Like : Likes
@@ -117,6 +161,10 @@ User "1" -- "0..*" Message : Sends/Receives
 User "1" -- "0..*" Block : Blocks/Is Blocked
 User "1" -- "0..*" Report : Reports
 User "1" -- "0..*" Notification : Receives
-
 Profile "1" -- "1" Location : Located In
+
+Moderator -- Suspension : Creates
+Suspension -- User : SuspendedUser
+User <|-- NormalUser
+User <|-- Moderator
 @enduml
