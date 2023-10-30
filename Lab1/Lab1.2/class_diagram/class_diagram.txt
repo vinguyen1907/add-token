@@ -157,6 +157,7 @@ Profile "1" -- "1" Location : Located In
 Moderator -- Suspension : Creates
 Suspension -- User : SuspendedUser
 User <|-- NormalUser
+
 User <|-- Moderator
 
 MatchNotification --|> Notification
