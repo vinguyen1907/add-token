@@ -1,0 +1,37 @@
+@startuml
+actor User
+boundary LoginGUI
+participant AuthenController
+actor AuthenService
+boundary MainScreenGUI
+
+User -> LoginGUI: Enter username/password
+activate LoginGUI
+User -> LoginGUI: Tap Submit button
+
+LoginGUI -> AuthenController: login
+activate AuthenController
+
+AuthenController -> AuthenService: validate
+
+alt User found
+  alt Login successfully
+    AuthenService --> AuthenController: Login successfully
+    AuthenController --> LoginGUI: Login successfully
+    activate MainScreenGUI
+    LoginGUI --> MainScreenGUI : Redirect to Main screen
+    deactivate MainScreenGUI
+  else Wrong password
+    AuthenService --> AuthenController: Wrong password
+    AuthenController --> LoginGUI: Wrong password
+    LoginGUI --> User : Wrong password
+  end
+else User not found
+  AuthenService --> AuthenController: User not found
+  deactivate AuthenService
+  AuthenController --> LoginGUI : User not found
+  deactivate AuthenController
+  LoginGUI --> User : User not found
+  deactivate LoginGUI
+end
+@enduml
