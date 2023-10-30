@@ -1,0 +1,28 @@
+@startuml
+:Moderator: as mod
+:Admin: as ad
+
+left to right direction
+rectangle Authentication {
+  (Grant moderator permission) as grantPermission
+  (Delete user account) as deleteAccount
+  (Update user account) as updateAccount
+  (View user profile) as viewProfile
+  (Update user profile) as updateProfile
+  (Validate message report) as validateMessage
+  (Validate account report) as validateAccount
+}
+
+ad --> grantPermission
+ad --> deleteAccount
+ad --> updateAccount
+ad --> viewProfile
+ad --> updateProfile
+ad --> validateMessage
+ad --> validateAccount
+
+viewProfile <-- mod
+updateProfile <-- mod
+validateMessage <-- mod
+validateAccount <-- mod
+@enduml

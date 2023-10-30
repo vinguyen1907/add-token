@@ -1,0 +1,46 @@
+@startuml
+:Regular User: as ru
+:Premium User: as pu
+:Payment: as payment
+
+left to right direction
+rectangle UserActions {
+  (View profile) as viewProfile
+  (Update profile) as updateProfile
+  (Search for matches) as searchMatches
+  (Send message) as sendMessage
+  (Receive message) as receiveMessage
+  (Report message) as reportMessage
+  (Like/Dislike profile) as reactProfile
+  (Block user) as blockUser
+  (Receive notification) as receiveNotification
+  (Buy premium) as buyPremium
+  (Access premium features) as accessPremium
+  (Extend premium) as extendPremium
+}
+
+ru --> viewProfile
+ru --> updateProfile
+ru --> searchMatches
+ru --> sendMessage
+ru --> receiveMessage
+ru --> reportMessage
+ru --> reactProfile
+ru --> blockUser
+ru --> receiveNotification
+ru --> buyPremium
+
+viewProfile <-- pu
+updateProfile <-- pu
+searchMatches <-- pu
+sendMessage <-- pu
+receiveMessage <-- pu
+reportMessage <-- pu
+reactProfile <-- pu
+blockUser <-- pu
+receiveNotification <-- pu
+extendPremium <-- pu
+
+buyPremium <-- payment
+extendPremium <-- payment
+@enduml
