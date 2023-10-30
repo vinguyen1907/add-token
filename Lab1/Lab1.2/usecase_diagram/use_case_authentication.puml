@@ -1,0 +1,36 @@
+@startuml
+:Regular User: as ru
+:Violating User: as vu
+:Premium User: as pu
+:Moderator: as mod
+:Admin: as ad
+
+left to right direction
+rectangle Authentication {
+  (Sign in) as signIn
+  (Sign up) as signUp
+  (Forgot password) as forgotPassword
+  (Change password) as changePassword
+  (Sign out) as signOut
+}
+
+ru --> signIn
+ru --> signUp
+ru --> forgotPassword
+ru --> changePassword
+ru --> signOut
+
+signOut <-- vu
+
+signIn <-- pu
+signUp <-- pu
+forgotPassword <-- pu
+changePassword <-- pu
+signOut <-- pu
+
+mod --> signIn
+mod --> changePassword
+mod --> signOut
+signIn <-- ad
+signOut <-- ad
+@enduml
